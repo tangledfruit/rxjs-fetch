@@ -1,0 +1,25 @@
+{
+  "name": "rx-fetch",
+  "version": "0.0.1",
+  "description": "RxJS-flavored version of HTTP fetch API for node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tangledfruit/rx-fetch.git"
+  },
+  "keywords": [
+    "rx",
+    "rxjs",
+    "http",
+    "fetch"
+  ],
+  "author": "tangledfruit <code@tangledfruit.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tangledfruit/rx-fetch/issues"
+  },
+  "homepage": "https://github.com/tangledfruit/rx-fetch#readme"
+}
