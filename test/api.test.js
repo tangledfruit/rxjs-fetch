@@ -78,7 +78,7 @@ const mapResponseToText = function (response) {
 	if (response.status >= 400)
     throw new Error("Bad server response");
 
-	return response.text;
+	return response.text();
 
 }
 
@@ -110,10 +110,8 @@ describe('rx-fetch', function () {
 
 	it('should facilitate the making of requests', function (done) {
 
-		var fetchResult = rxFetch('http://tangledfruit.com/succeed.txt');
-
-    fetchResult = fetchResult // reMove me
-			.map(mapResponseToText);
+		const fetchResult = rxFetch('http://tangledfruit.com/succeed.txt')
+      .flatMapLatest(mapResponseToText);
 
 		expectOneResult(fetchResult, done,
 			((result) => {
@@ -127,7 +125,7 @@ describe('rx-fetch', function () {
 	it('should do the right thing with bad requests', function (done) {
 
 		const fetchResult = rxFetch('http://tangledfruit.com/fail.txt')
-			.map(mapResponseToText);
+      .flatMapLatest(mapResponseToText);
 
 		expectOnlyError(fetchResult, done,
 			((err) => {
