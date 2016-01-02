@@ -4,7 +4,7 @@
   "description": "RxJS-flavored version of HTTP fetch API for node.js",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "jshint `npm run -s files` && lintspaces -i js-comments -e .editorconfig `npm run -s files` && mocha"
   },
   "repository": {
     "type": "git",
