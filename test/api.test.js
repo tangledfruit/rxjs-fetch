@@ -48,21 +48,22 @@ const expectOnlyError = function (observable, done, match) {
 
   observable.subscribe(
 
-		function (value) {
-			if (!failure)
-				failure = new Error("onNext was called with value: ", value);
-		},
+    function (value) {
+      if (!failure)
+        failure = new Error("onNext was called with value: ", value);
+    },
 
     function (err) {
-			if (!failure) {
-	      try {
-					match(err);
-	      }
-	      catch (err) {
-	        failure = err;
-	      }
-			}
-			done(failure);
+      if (!failure) {
+        try {
+          if (match)
+            match(err);
+        }
+        catch (err) {
+          failure = err;
+        }
+      }
+      done(failure);
     },
 
     function () {
@@ -73,67 +74,114 @@ const expectOnlyError = function (observable, done, match) {
 
 //------------------------------------------------------------------------------
 
-const mapResponseToText = function (response) {
-
-	if (response.status >= 400)
-    throw new Error("Bad server response");
-
-	return response.text;
-
-}
-
-//------------------------------------------------------------------------------
-
 describe('rx-fetch', function () {
 
-	before(function () {
+  it('should be defined', function () {
 
-		nock('http://tangledfruit.com')
-			.get('/succeed.txt')
-			.reply(200, good);
+    expect(fetch).to.be.a('function');
 
-		nock('http://tangledfruit.com')
-			.get('/fail.txt')
-			.reply(404, bad);
+  });
 
-	});
+  //----------------------------------------------------------------------------
 
-	//----------------------------------------------------------------------------
+  it('should return an Observable which yields a single Response object', function (done) {
 
-	it('should be defined', function () {
+    nock('http://tangledfruit.com')
+      .get('/succeed.txt')
+      .reply(200, good);
 
-		expect(fetch).to.be.a('function');
+    const fetchResult = rxFetch('http://tangledfruit.com/succeed.txt');
 
-	});
+    expectOneResult(fetchResult, done,
+      ((result) => {
+        expect(result.status).to.equal(200);
+        expect(result.ok).to.equal(true);
+        expect(result.statusText).to.equal('OK');
+        expect(typeof (result.headers)).to.equal('object');
+        expect(result.url).to.equal('http://tangledfruit.com/succeed.txt');
+      }));
 
-	//----------------------------------------------------------------------------
+  });
 
-	it('should facilitate the making of requests', function (done) {
+  //----------------------------------------------------------------------------
 
-		var fetchResult = rxFetch('http://tangledfruit.com/succeed.txt');
+  describe('.text()', function() {
 
-    fetchResult = fetchResult // reMove me
-			.map(mapResponseToText);
+    nock('http://tangledfruit.com')
+      .get('/succeed.txt')
+      .reply(200, good);
 
-		expectOneResult(fetchResult, done,
-			((result) => {
-				expect(result).to.equal(good);
-			}));
+    const fetchResult = rxFetch('http://tangledfruit.com/succeed.txt');
 
-	});
+    it('should return an Observable which yields the body of the response as a string', function (done) {
 
-	//----------------------------------------------------------------------------
+      const textResult = fetchResult.flatMapLatest((response) => response.text());
 
-	it('should do the right thing with bad requests', function (done) {
+      expectOneResult(textResult, done,
+        ((textResult) => {
+          expect(textResult).to.equal(good);
+        }));
 
-		const fetchResult = rxFetch('http://tangledfruit.com/fail.txt')
-			.map(mapResponseToText);
+    });
 
-		expectOnlyError(fetchResult, done,
-			((err) => {
-				expect(err.toString()).to.equal("Error: Bad server response");
-			}));
+    it('should yield an error result if called a second time', function (done) {
 
-	});
+      const textResult = fetchResult.flatMapLatest((response) => response.text());
+      expectOnlyError(textResult, done);
+
+    });
+
+  });
+
+  //----------------------------------------------------------------------------
+
+  describe('.json()', function() {
+
+    nock('http://tangledfruit.com')
+      .get('/json.txt')
+      .reply(200, '{"x":["hello", "world", 42]}');
+
+    const fetchResult = rxFetch('http://tangledfruit.com/json.txt');
+
+    it('should return an Observable which yields the body of the response as parsed JSON', function (done) {
+
+      const jsonResult = fetchResult.flatMapLatest((response) => response.json());
+
+      expectOneResult(jsonResult, done,
+        ((textResult) => {
+          expect(textResult).to.deep.equal({"x": ["hello", "world", 42]});
+        }));
+
+    });
+
+    it('should yield an error result if called a second time', function (done) {
+
+      const jsonResult = fetchResult.flatMapLatest((response) => response.json());
+      expectOnlyError(jsonResult, done);
+
+    });
+
+  });
+
+  //----------------------------------------------------------------------------
+
+  it('should resolve with a Response object if the request fails', function (done) {
+
+    nock('http://tangledfruit.com')
+      .get('/fail.txt')
+      .reply(404, bad);
+
+    const fetchResult = rxFetch('http://tangledfruit.com/fail.txt');
+
+    expectOneResult(fetchResult, done,
+      ((result) => {
+        expect(result.status).to.equal(404);
+        expect(result.ok).to.equal(false);
+        expect(result.statusText).to.equal('Not Found');
+        expect(typeof (result.headers)).to.equal('object');
+        expect(result.url).to.equal('http://tangledfruit.com/fail.txt');
+      }));
+
+  });
 
 });
