@@ -1,4 +1,4 @@
-# rx-fetch [![Build Status](https://travis-ci.org/tangledfruit/rx-fetch.svg?branch=master)](https://travis-ci.org/tangledfruit/rx-fetch)
+# rx-fetch [![Build Status](https://travis-ci.org/tangledfruit/rx-fetch.svg?branch=master)](https://travis-ci.org/tangledfruit/rx-fetch) [![Coverage Status](https://coveralls.io/repos/tangledfruit/rx-fetch/badge.svg?branch=master&service=github)](https://coveralls.io/github/tangledfruit/rx-fetch?branch=master)
 
 RxJS-flavored version of HTTP fetch API for node.js
 

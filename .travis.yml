@@ -10,3 +10,5 @@ deploy:
   on:
     tags: true
     repo: tangledfruit/rx-fetch
+script: "npm run-script test-travis"
+after_script: "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
