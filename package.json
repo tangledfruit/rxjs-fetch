@@ -21,5 +21,16 @@
   "bugs": {
     "url": "https://github.com/tangledfruit/rx-fetch/issues"
   },
-  "homepage": "https://github.com/tangledfruit/rx-fetch#readme"
+  "homepage": "https://github.com/tangledfruit/rx-fetch#readme",
+  "dependencies": {
+    "isomorphic-fetch": "^2.2.0",
+    "rx": "^4.0.7"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "jshint": "^2.9.1-rc2",
+    "lintspaces-cli": "^0.1.1",
+    "mocha": "^2.3.4",
+    "nock": "^3.6.0"
+  }
 }
