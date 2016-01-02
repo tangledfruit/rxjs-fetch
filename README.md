@@ -19,9 +19,9 @@ npm install --save rx-fetch
 ## Usage
 
 ```js
-require('rx-fetch');
+const rxFetch = require('rx-fetch');
 
-rx-fetch('//offline-news-api.herokuapp.com/stories')
+rxFetch('//offline-news-api.herokuapp.com/stories')
   .subscribe(
     function (response) {
       if (response.status >= 400) {
