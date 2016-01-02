@@ -4,6 +4,7 @@
   "description": "RxJS-flavored version of HTTP fetch API for node.js",
   "main": "index.js",
   "scripts": {
+    "files": "find . -name '*.js' ! -path './node_modules/*' ! -path './coverage/*'",
     "test": "jshint `npm run -s files` && lintspaces -i js-comments -e .editorconfig `npm run -s files` && mocha",
     "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*"
   },
