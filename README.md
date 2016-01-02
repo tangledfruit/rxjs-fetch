@@ -1,4 +1,5 @@
-# rx-fetch
+# rx-fetch [![Build Status](https://travis-ci.org/tangledfruit/rx-fetch.svg?branch=master)](https://travis-ci.org/tangledfruit/rx-fetch)
+
 RxJS-flavored version of HTTP fetch API for node.js
 
 Built on top of [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch).
