@@ -226,6 +226,58 @@ describe('rx-fetch', function () {
 
   //----------------------------------------------------------------------------
 
+  describe('.failIfStatusNotIn()', function () {
+
+    it('should fail if acceptableStatusCodes is not an array', function() {
+
+      expect(function () {
+
+        rxFetch('http://tangledfruit.com/succeed.txt').failIfStatusNotIn(404);
+
+      }).to.throw('acceptableStatusCodes must be an Array');
+
+    });
+
+    //--------------------------------------------------------------------------
+
+    it('should return an Observable which yields a single Response object on HTTP success', function (done) {
+
+      nock('http://tangledfruit.com')
+        .get('/succeed.txt')
+        .reply(200, good);
+
+      const fetchResult = rxFetch('http://tangledfruit.com/succeed.txt').failIfStatusNotIn([200]);
+
+      expectOneResult(fetchResult, done,
+        ((result) => {
+          expect(result.status).to.equal(200);
+          expect(result.ok).to.equal(true);
+          expect(result.statusText).to.equal('OK');
+          expect(typeof (result.headers)).to.equal('object');
+          expect(result.url).to.equal('http://tangledfruit.com/succeed.txt');
+        }));
+
+    });
+
+    //--------------------------------------------------------------------------
+
+    it('should yield on onError notification if the request fails', function (done) {
+
+      nock('http://tangledfruit.com')
+        .get('/fail.txt')
+        .reply(404, bad);
+
+      const fetchResult = rxFetch('http://tangledfruit.com/fail.txt').failIfStatusNotIn([200, 400]);
+
+      expectOnlyError(fetchResult, done);
+        // TBD: How to provide access to the error information?
+
+    });
+
+  });
+
+  //----------------------------------------------------------------------------
+
   describe('.text()', function() {
 
     it('should return an Observable which yields the body of the response as a string', function (done) {
