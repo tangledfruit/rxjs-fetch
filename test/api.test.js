@@ -217,8 +217,13 @@ describe('rx-fetch', function () {
 
       const fetchResult = rxFetch('http://tangledfruit.com/fail.txt').failOnHttpError();
 
-      expectOnlyError(fetchResult, done);
-        // TBD: How to provide access to the error information?
+      expectOnlyError(fetchResult, done,
+        function (error) {
+          expect(error).to.be.an.instanceof(Error);
+          expect(error.message).to.match(/^HTTP Error 404:/);
+          expect(error.response.status).to.equal(404);
+          expect(error.response.url).to.equal("http://tangledfruit.com/fail.txt");
+        });
 
     });
 
@@ -269,8 +274,13 @@ describe('rx-fetch', function () {
 
       const fetchResult = rxFetch('http://tangledfruit.com/fail.txt').failIfStatusNotIn([200, 400]);
 
-      expectOnlyError(fetchResult, done);
-        // TBD: How to provide access to the error information?
+      expectOnlyError(fetchResult, done,
+        function (error) {
+          expect(error).to.be.an.instanceof(Error);
+          expect(error.message).to.match(/^HTTP Error 404:/);
+          expect(error.response.status).to.equal(404);
+          expect(error.response.url).to.equal("http://tangledfruit.com/fail.txt");
+        });
 
     });
 
@@ -304,7 +314,14 @@ describe('rx-fetch', function () {
         .reply(404, bad);
 
       const fetchResult = rxFetch('http://tangledfruit.com/fail.txt').text();
-      expectOnlyError(fetchResult, done);
+
+      expectOnlyError(fetchResult, done,
+        function (error) {
+          expect(error).to.be.an.instanceof(Error);
+          expect(error.message).to.match(/^HTTP Error 404:/);
+          expect(error.response.status).to.equal(404);
+          expect(error.response.url).to.equal("http://tangledfruit.com/fail.txt");
+        });
 
     });
 
@@ -338,7 +355,14 @@ describe('rx-fetch', function () {
         .reply(404, bad);
 
       const fetchResult = rxFetch('http://tangledfruit.com/fail.txt').json();
-      expectOnlyError(fetchResult, done);
+
+      expectOnlyError(fetchResult, done,
+        function (error) {
+          expect(error).to.be.an.instanceof(Error);
+          expect(error.message).to.match(/^HTTP Error 404:/);
+          expect(error.response.status).to.equal(404);
+          expect(error.response.url).to.equal("http://tangledfruit.com/fail.txt");
+        });
 
     });
 
