@@ -65,6 +65,12 @@ rxFetch('http://tangledfruit.com/mumble.txt').failOnHttpError()
 ```
 
 ```js
+rxFetch('http://tangledfruit.com/mumble.txt').failIfStatusNotIn([200, 404])
+  // -> This Observable will yield an onError notification if the HTTP status
+  // code is anything other than 200 or 404.
+```
+
+```js
 rxFetch('http://tangledfruit.com/mumble.txt').text()
   // -> This Observable will yield an onNext notification containing only the
   // body text of the HTTP response. The HTTP headers and status are discarded.
