@@ -60,14 +60,15 @@ There are some shortcut methods available on the Observable object that is retur
 
 ```js
 rxFetch('http://tangledfruit.com/mumble.txt').failOnHttpError()
-  // -> This Observable will yield an onError notification if the HTTP status
-  // code is >= 400.
+  // -> This Observable will yield an onError notification using the HttpError
+  // object described below if the HTTP status code is >= 400.
 ```
 
 ```js
 rxFetch('http://tangledfruit.com/mumble.txt').failIfStatusNotIn([200, 404])
-  // -> This Observable will yield an onError notification if the HTTP status
-  // code is anything other than 200 or 404.
+  // -> This Observable will yield an onError notification using the HttpError
+  // object described below if the HTTP status code is anything other than the
+  // codes listed (in this case, 200 and 404).
 ```
 
 ```js
@@ -83,6 +84,16 @@ rxFetch('http://tangledfruit.com/mumble.txt').json()
   // body of the HTTP response parsed as JSON. The HTTP headers and status are
   // discarded. This call implies .failOnHttpError().
 ```
+
+### HTTP Error object
+
+The `.failOnHttpError` and `.failIfStatusNotIn` methods will send an `onError`
+notification with an `HttpError` object. This is the standard `Error` Object,
+but it has an extra member `response` from which you can access other properties
+as described earlier.
+
+The message for the error will be "HTTP Error (status code): (server message)".
+For example, "HTTP Error 404: Not Found".
 
 
 ## License
