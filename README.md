@@ -56,6 +56,29 @@ rxFetch('http://tangledfruit.com/mumble.txt')
     });
 ```
 
+There are some shortcut methods available on the Observable object that is returned from `rxFetch`:
+
+```js
+rxFetch('http://tangledfruit.com/mumble.txt').failOnHttpError()
+  // -> This Observable will yield an onError notification if the HTTP status
+  // code is >= 400.
+```
+
+```js
+rxFetch('http://tangledfruit.com/mumble.txt').text()
+  // -> This Observable will yield an onNext notification containing only the
+  // body text of the HTTP response. The HTTP headers and status are discarded.
+  // This call implies .failOnHttpError().
+```
+
+```js
+rxFetch('http://tangledfruit.com/mumble.txt').json()
+  // -> This Observable will yield an onNext notification containing only the
+  // body of the HTTP response parsed as JSON. The HTTP headers and status are
+  // discarded. This call implies .failOnHttpError().
+```
+
+
 ## License
 
 MIT
