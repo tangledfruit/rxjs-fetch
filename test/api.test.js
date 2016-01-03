@@ -105,7 +105,7 @@ describe('rx-fetch', function () {
 
   //----------------------------------------------------------------------------
 
-  describe('.text()', function() {
+  describe('response.text()', function() {
 
     nock('http://tangledfruit.com')
       .get('/succeed.txt')
@@ -135,7 +135,7 @@ describe('rx-fetch', function () {
 
   //----------------------------------------------------------------------------
 
-  describe('.json()', function() {
+  describe('response.json()', function() {
 
     nock('http://tangledfruit.com')
       .get('/json.txt')
@@ -165,7 +165,7 @@ describe('rx-fetch', function () {
 
   //----------------------------------------------------------------------------
 
-  it('should resolve with a Response object if the request fails', function (done) {
+  it('should still resolve with a Response object if the request fails', function (done) {
 
     nock('http://tangledfruit.com')
       .get('/fail.txt')
@@ -181,6 +181,114 @@ describe('rx-fetch', function () {
         expect(typeof (result.headers)).to.equal('object');
         expect(result.url).to.equal('http://tangledfruit.com/fail.txt');
       }));
+
+  });
+
+  //----------------------------------------------------------------------------
+
+  describe('.failOnHttpError()', function () {
+
+    it('should return an Observable which yields a single Response object on HTTP success', function (done) {
+
+      nock('http://tangledfruit.com')
+        .get('/succeed.txt')
+        .reply(200, good);
+
+      const fetchResult = rxFetch('http://tangledfruit.com/succeed.txt').failOnHttpError();
+
+      expectOneResult(fetchResult, done,
+        ((result) => {
+          expect(result.status).to.equal(200);
+          expect(result.ok).to.equal(true);
+          expect(result.statusText).to.equal('OK');
+          expect(typeof (result.headers)).to.equal('object');
+          expect(result.url).to.equal('http://tangledfruit.com/succeed.txt');
+        }));
+
+    });
+
+    //--------------------------------------------------------------------------
+
+    it('should yield on onError notification if the request fails', function (done) {
+
+      nock('http://tangledfruit.com')
+        .get('/fail.txt')
+        .reply(404, bad);
+
+      const fetchResult = rxFetch('http://tangledfruit.com/fail.txt').failOnHttpError();
+
+      expectOnlyError(fetchResult, done);
+        // TBD: How to provide access to the error information?
+
+    });
+
+  });
+
+  //----------------------------------------------------------------------------
+
+  describe('.text()', function() {
+
+    it('should return an Observable which yields the body of the response as a string', function (done) {
+
+      nock('http://tangledfruit.com')
+        .get('/succeed.txt')
+        .reply(200, good);
+
+      const textResult = rxFetch('http://tangledfruit.com/succeed.txt').text();
+
+      expectOneResult(textResult, done,
+        ((textResult) => {
+          expect(textResult).to.equal(good);
+        }));
+
+    });
+
+    //--------------------------------------------------------------------------
+
+    it('should yield an error result if HTTP request fails', function (done) {
+
+      nock('http://tangledfruit.com')
+        .get('/fail.txt')
+        .reply(404, bad);
+
+      const fetchResult = rxFetch('http://tangledfruit.com/fail.txt').text();
+      expectOnlyError(fetchResult, done);
+
+    });
+
+  });
+
+  //----------------------------------------------------------------------------
+
+  describe('.json()', function() {
+
+    nock('http://tangledfruit.com')
+      .get('/json.txt')
+      .reply(200, '{"x":["hello", "world", 42]}');
+
+    it('should return an Observable which yields the body of the response as parsed JSON', function (done) {
+
+      const jsonResult = rxFetch('http://tangledfruit.com/json.txt').json();
+
+      expectOneResult(jsonResult, done,
+        ((textResult) => {
+          expect(textResult).to.deep.equal({"x": ["hello", "world", 42]});
+        }));
+
+    });
+
+    //--------------------------------------------------------------------------
+
+    it('should yield an error result if called a second time', function (done) {
+
+      nock('http://tangledfruit.com')
+        .get('/fail.txt')
+        .reply(404, bad);
+
+      const fetchResult = rxFetch('http://tangledfruit.com/fail.txt').json();
+      expectOnlyError(fetchResult, done);
+
+    });
 
   });
 
