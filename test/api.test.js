@@ -105,6 +105,46 @@ describe('rx-fetch', function () {
 
   //----------------------------------------------------------------------------
 
+  it('should not start work until the Observable has been subscribed to', function (done) {
+
+    const scope = nock('http://tangledfruit.com')
+      .get('/succeed.txt')
+      .reply(200, good);
+
+    const fetchResult = rxFetch('http://tangledfruit.com/succeed.txt');
+
+    expect(scope.isDone()).to.equal(false);
+
+    expectOneResult(fetchResult, done,
+      ((result) => {
+        expect(result.status).to.equal(200);
+        expect(result.ok).to.equal(true);
+        expect(result.statusText).to.equal('OK');
+        expect(typeof (result.headers)).to.equal('object');
+        expect(result.url).to.equal('http://tangledfruit.com/succeed.txt');
+      }));
+
+  });
+
+  //----------------------------------------------------------------------------
+
+  it('should disallow a second subscription to the Observable', function (done) {
+
+    nock('http://tangledfruit.com')
+      .get('/succeed.txt')
+      .reply(200, good);
+
+    const fetchResult = rxFetch('http://tangledfruit.com/succeed.txt');
+
+    expectOneResult(fetchResult, done,
+      ((result) => {
+        expect(() => fetchResult.subscribe()).to.throw("can not subscribe to rx-fetch result more than once");
+      }));
+
+  });
+
+  //----------------------------------------------------------------------------
+
   describe('response.text()', function() {
 
     nock('http://tangledfruit.com')
