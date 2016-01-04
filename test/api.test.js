@@ -145,6 +145,31 @@ describe('rx-fetch', function () {
 
   //----------------------------------------------------------------------------
 
+  it('should allow you to post with a request body', function (done) {
+
+    nock('http://tangledfruit.com')
+      .post('/post.txt', "Yo, what's up?")
+      .reply(200, good);
+
+    const fetchResult = rxFetch('http://tangledfruit.com/post.txt',
+      {
+        method: 'post',
+        body: "Yo, what's up?"
+      });
+
+    expectOneResult(fetchResult, done,
+      ((result) => {
+        expect(result.status).to.equal(200);
+        expect(result.ok).to.equal(true);
+        expect(result.statusText).to.equal('OK');
+        expect(typeof (result.headers)).to.equal('object');
+        expect(result.url).to.equal('http://tangledfruit.com/post.txt');
+      }));
+
+  });
+
+  //----------------------------------------------------------------------------
+
   describe('response.text()', function() {
 
     nock('http://tangledfruit.com')
