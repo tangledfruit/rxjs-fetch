@@ -30,11 +30,13 @@
   },
   "devDependencies": {
     "chai": "^3.4.1",
+    "co-mocha": "^1.1.2",
     "coveralls": "^2.11.6",
     "istanbul": "^0.4.1",
     "jshint": "^2.9.1-rc2",
     "lintspaces-cli": "^0.1.1",
     "mocha": "^2.3.4",
-    "nock": "^3.6.0"
+    "nock": "^3.6.0",
+    "rx-to-async-iterator": "^1.0.1"
   }
 }
