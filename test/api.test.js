@@ -74,17 +74,15 @@ const expectOnlyError = function (observable, done, match) {
 
 //------------------------------------------------------------------------------
 
-describe('rx-fetch', function () {
+describe("rx-fetch", function () {
 
-  it('should be defined', function () {
-
+  it("should be defined", function () {
     expect(fetch).to.be.a('function');
-
   });
 
   //----------------------------------------------------------------------------
 
-  it('should return an Observable which yields a single Response object', function (done) {
+  it("should return an Observable which yields a single Response object", function (done) {
 
     nock('http://tangledfruit.com')
       .get('/succeed.txt')
@@ -105,7 +103,7 @@ describe('rx-fetch', function () {
 
   //----------------------------------------------------------------------------
 
-  it('should not start work until the Observable has been subscribed to', function (done) {
+  it("should not start work until the Observable has been subscribed to", function (done) {
 
     const scope = nock('http://tangledfruit.com')
       .get('/succeed.txt')
@@ -128,7 +126,7 @@ describe('rx-fetch', function () {
 
   //----------------------------------------------------------------------------
 
-  it('should disallow a second subscription to the Observable', function (done) {
+  it("should disallow a second subscription to the Observable", function (done) {
 
     nock('http://tangledfruit.com')
       .get('/succeed.txt')
@@ -145,7 +143,7 @@ describe('rx-fetch', function () {
 
   //----------------------------------------------------------------------------
 
-  it('should allow you to post with a request body', function (done) {
+  it("should allow you to post with a request body", function (done) {
 
     nock('http://tangledfruit.com')
       .post('/post.txt', "Yo, what's up?")
@@ -170,7 +168,7 @@ describe('rx-fetch', function () {
 
   //----------------------------------------------------------------------------
 
-  describe('response.text()', function() {
+  describe("response.text()", function() {
 
     nock('http://tangledfruit.com')
       .get('/succeed.txt')
@@ -178,7 +176,7 @@ describe('rx-fetch', function () {
 
     const fetchResult = rxFetch('http://tangledfruit.com/succeed.txt');
 
-    it('should return an Observable which yields the body of the response as a string', function (done) {
+    it("should return an Observable which yields the body of the response as a string", function (done) {
 
       const textResult = fetchResult.flatMapLatest((response) => response.text());
 
@@ -189,7 +187,7 @@ describe('rx-fetch', function () {
 
     });
 
-    it('should yield an error result if called a second time', function (done) {
+    it("should yield an error result if called a second time", function (done) {
 
       const textResult = fetchResult.flatMapLatest((response) => response.text());
       expectOnlyError(textResult, done);
@@ -200,7 +198,7 @@ describe('rx-fetch', function () {
 
   //----------------------------------------------------------------------------
 
-  describe('response.json()', function() {
+  describe("response.json()", function() {
 
     nock('http://tangledfruit.com')
       .get('/json.txt')
@@ -208,7 +206,7 @@ describe('rx-fetch', function () {
 
     const fetchResult = rxFetch('http://tangledfruit.com/json.txt');
 
-    it('should return an Observable which yields the body of the response as parsed JSON', function (done) {
+    it("should return an Observable which yields the body of the response as parsed JSON", function (done) {
 
       const jsonResult = fetchResult.flatMapLatest((response) => response.json());
 
@@ -219,7 +217,7 @@ describe('rx-fetch', function () {
 
     });
 
-    it('should yield an error result if called a second time', function (done) {
+    it("should yield an error result if called a second time", function (done) {
 
       const jsonResult = fetchResult.flatMapLatest((response) => response.json());
       expectOnlyError(jsonResult, done);
@@ -230,7 +228,7 @@ describe('rx-fetch', function () {
 
   //----------------------------------------------------------------------------
 
-  it('should still resolve with a Response object if the request fails', function (done) {
+  it("should still resolve with a Response object if the request fails", function (done) {
 
     nock('http://tangledfruit.com')
       .get('/fail.txt')
@@ -251,9 +249,9 @@ describe('rx-fetch', function () {
 
   //----------------------------------------------------------------------------
 
-  describe('.failOnHttpError()', function () {
+  describe(".failOnHttpError()", function () {
 
-    it('should return an Observable which yields a single Response object on HTTP success', function (done) {
+    it("should return an Observable which yields a single Response object on HTTP success", function (done) {
 
       nock('http://tangledfruit.com')
         .get('/succeed.txt')
@@ -274,7 +272,7 @@ describe('rx-fetch', function () {
 
     //--------------------------------------------------------------------------
 
-    it('should yield on onError notification if the request fails', function (done) {
+    it("should yield on onError notification if the request fails", function (done) {
 
       nock('http://tangledfruit.com')
         .get('/fail.txt')
@@ -296,9 +294,9 @@ describe('rx-fetch', function () {
 
   //----------------------------------------------------------------------------
 
-  describe('.failIfStatusNotIn()', function () {
+  describe(".failIfStatusNotIn()", function () {
 
-    it('should fail if acceptableStatusCodes is not an array', function() {
+    it("should fail if acceptableStatusCodes is not an array", function() {
 
       expect(function () {
 
@@ -310,7 +308,7 @@ describe('rx-fetch', function () {
 
     //--------------------------------------------------------------------------
 
-    it('should return an Observable which yields a single Response object on HTTP success', function (done) {
+    it("should return an Observable which yields a single Response object on HTTP success", function (done) {
 
       nock('http://tangledfruit.com')
         .get('/succeed.txt')
@@ -331,7 +329,7 @@ describe('rx-fetch', function () {
 
     //--------------------------------------------------------------------------
 
-    it('should yield on onError notification if the request fails', function (done) {
+    it("should yield on onError notification if the request fails", function (done) {
 
       nock('http://tangledfruit.com')
         .get('/fail.txt')
@@ -353,9 +351,9 @@ describe('rx-fetch', function () {
 
   //----------------------------------------------------------------------------
 
-  describe('.text()', function() {
+  describe(".text()", function() {
 
-    it('should return an Observable which yields the body of the response as a string', function (done) {
+    it("should return an Observable which yields the body of the response as a string", function (done) {
 
       nock('http://tangledfruit.com')
         .get('/succeed.txt')
@@ -372,7 +370,7 @@ describe('rx-fetch', function () {
 
     //--------------------------------------------------------------------------
 
-    it('should yield an error result if HTTP request fails', function (done) {
+    it("should yield an error result if HTTP request fails", function (done) {
 
       nock('http://tangledfruit.com')
         .get('/fail.txt')
@@ -394,13 +392,13 @@ describe('rx-fetch', function () {
 
   //----------------------------------------------------------------------------
 
-  describe('.json()', function() {
+  describe(".json()", function() {
 
     nock('http://tangledfruit.com')
       .get('/json.txt')
       .reply(200, '{"x":["hello", "world", 42]}');
 
-    it('should return an Observable which yields the body of the response as parsed JSON', function (done) {
+    it("should return an Observable which yields the body of the response as parsed JSON", function (done) {
 
       const jsonResult = rxFetch('http://tangledfruit.com/json.txt').json();
 
@@ -413,7 +411,7 @@ describe('rx-fetch', function () {
 
     //--------------------------------------------------------------------------
 
-    it('should yield an error result if called a second time', function (done) {
+    it("should yield an error result if called a second time", function (done) {
 
       nock('http://tangledfruit.com')
         .get('/fail.txt')
