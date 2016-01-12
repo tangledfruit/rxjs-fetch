@@ -1,6 +1,6 @@
 {
   "name": "rx-fetch",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "RxJS-flavored version of HTTP fetch API for node.js",
   "main": "index.js",
   "scripts": {
@@ -38,5 +38,8 @@
     "mocha": "^2.3.4",
     "nock": "^3.6.0",
     "rx-to-async-iterator": "^1.0.1"
+  },
+  "engines": {
+    "node": ">=4.0.0"
   }
 }
