@@ -11,15 +11,13 @@ const rxFetch = require('../lib/rx-fetch');
 const good = 'hello world. 你好世界。';
 const bad = 'good bye cruel world. 再见残酷的世界。';
 
-//------------------------------------------------------------------------------
 
-describe("rx-fetch", function () {
+describe("rx-fetch", () => {
 
-  it("should be defined", function () {
+  it("should be defined", () => {
     expect(fetch).to.be.a('function');
   });
 
-  //----------------------------------------------------------------------------
 
   it("should return an Observable which yields a single Response object", function* () {
 
@@ -37,7 +35,6 @@ describe("rx-fetch", function () {
 
   });
 
-  //----------------------------------------------------------------------------
 
   it("should not start work until the Observable has been subscribed to", function* () {
 
@@ -59,7 +56,6 @@ describe("rx-fetch", function () {
 
   });
 
-  //----------------------------------------------------------------------------
 
   it("should disallow a second subscription to the Observable", function* () {
 
@@ -75,7 +71,6 @@ describe("rx-fetch", function () {
 
   });
 
-  //----------------------------------------------------------------------------
 
   it("should allow you to post with a request body", function* () {
 
@@ -97,9 +92,8 @@ describe("rx-fetch", function () {
 
   });
 
-  //----------------------------------------------------------------------------
 
-  describe("response.text()", function () {
+  describe("response.text()", () => {
 
     nock('http://tangledfruit.com')
       .get('/succeed.txt')
@@ -110,7 +104,7 @@ describe("rx-fetch", function () {
     it("should return an Observable which yields the body of the response as a string", function* () {
 
       const textResult = yield fetchResult
-        .flatMapLatest((response) => response.text())
+        .flatMapLatest(response => response.text())
         .shouldGenerateOneValue();
 
       expect(textResult).to.equal(good);
@@ -120,7 +114,7 @@ describe("rx-fetch", function () {
     it("should yield an error result if called a second time", function* () {
 
       const textResult = yield fetchResult
-        .flatMapLatest((response) => response.text())
+        .flatMapLatest(response => response.text())
         .shouldThrow();
 
       expect(textResult.message).to.equal("can not subscribe to rx-fetch result more than once");
@@ -129,9 +123,8 @@ describe("rx-fetch", function () {
 
   });
 
-  //----------------------------------------------------------------------------
 
-  describe("response.json()", function () {
+  describe("response.json()", () => {
 
     nock('http://tangledfruit.com')
       .get('/json.txt')
@@ -142,7 +135,7 @@ describe("rx-fetch", function () {
     it("should return an Observable which yields the body of the response as parsed JSON", function* () {
 
       const jsonResult = yield fetchResult
-        .flatMapLatest((response) => response.json())
+        .flatMapLatest(response => response.json())
         .shouldGenerateOneValue();
 
       expect(jsonResult).to.deep.equal({"x": ["hello", "world", 42]});
@@ -152,7 +145,7 @@ describe("rx-fetch", function () {
     it("should yield an error result if called a second time", function* () {
 
       const jsonResult = yield fetchResult
-        .flatMapLatest((response) => response.json())
+        .flatMapLatest(response => response.json())
         .shouldThrow();
 
       expect(jsonResult.message).to.equal("can not subscribe to rx-fetch result more than once");
@@ -161,7 +154,6 @@ describe("rx-fetch", function () {
 
   });
 
-  //----------------------------------------------------------------------------
 
   it("should still resolve with a Response object if the request fails", function* () {
 
@@ -179,9 +171,8 @@ describe("rx-fetch", function () {
 
   });
 
-  //----------------------------------------------------------------------------
 
-  describe(".failOnHttpError()", function () {
+  describe(".failOnHttpError()", () => {
 
     it("should return an Observable which yields a single Response object on HTTP success", function* () {
 
@@ -201,7 +192,6 @@ describe("rx-fetch", function () {
 
     });
 
-    //--------------------------------------------------------------------------
 
     it("should yield on onError notification if the request fails", function* () {
 
@@ -222,21 +212,17 @@ describe("rx-fetch", function () {
 
   });
 
-  //----------------------------------------------------------------------------
 
-  describe(".failIfStatusNotIn()", function () {
+  describe(".failIfStatusNotIn()", () => {
 
-    it("should fail if acceptableStatusCodes is not an array", function () {
+    it("should fail if acceptableStatusCodes is not an array", () => {
 
-      expect(function () {
-
+      expect(() => {
         rxFetch('http://tangledfruit.com/succeed.txt').failIfStatusNotIn(404);
-
       }).to.throw('acceptableStatusCodes must be an Array');
 
     });
 
-    //--------------------------------------------------------------------------
 
     it("should return an Observable which yields a single Response object on HTTP success", function* () {
 
@@ -256,7 +242,6 @@ describe("rx-fetch", function () {
 
     });
 
-    //--------------------------------------------------------------------------
 
     it("should yield on onError notification if the request fails", function* () {
 
@@ -277,9 +262,8 @@ describe("rx-fetch", function () {
 
   });
 
-  //----------------------------------------------------------------------------
 
-  describe(".text()", function() {
+  describe(".text()", () => {
 
     it("should return an Observable which yields the body of the response as a string", function* () {
 
@@ -293,7 +277,6 @@ describe("rx-fetch", function () {
 
     });
 
-    //--------------------------------------------------------------------------
 
     it("should yield an error result if HTTP request fails", function* () {
 
@@ -312,9 +295,8 @@ describe("rx-fetch", function () {
 
   });
 
-  //----------------------------------------------------------------------------
 
-  describe(".json()", function () {
+  describe(".json()", () => {
 
     nock('http://tangledfruit.com')
       .get('/json.txt')
@@ -328,7 +310,6 @@ describe("rx-fetch", function () {
 
     });
 
-    //--------------------------------------------------------------------------
 
     it("should yield an error result if called a second time", function* () {
 
