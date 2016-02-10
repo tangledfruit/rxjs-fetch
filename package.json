@@ -37,7 +37,7 @@
     "lintspaces-cli": "0.1.1",
     "mocha": "2.4.5",
     "nock": "7.0.2",
-    "rx-to-async-iterator": "1.0.3"
+    "rx-to-async-iterator": "1.0.4"
   },
   "engines": {
     "node": ">=4.0.0"
