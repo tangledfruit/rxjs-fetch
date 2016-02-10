@@ -25,19 +25,19 @@
   },
   "homepage": "https://github.com/tangledfruit/rx-fetch#readme",
   "dependencies": {
-    "isomorphic-fetch": "2.2.0",
+    "isomorphic-fetch": "2.2.1",
     "rx": "4.0.7"
   },
   "devDependencies": {
-    "chai": "3.4.1",
+    "chai": "3.5.0",
     "co-mocha": "1.1.2",
     "coveralls": "2.11.6",
-    "istanbul": "0.4.1",
-    "jshint": "2.9.1-rc2",
+    "istanbul": "0.4.2",
+    "jshint": "2.9.1",
     "lintspaces-cli": "0.1.1",
-    "mocha": "2.3.4",
-    "nock": "3.6.0",
-    "rx-to-async-iterator": "1.0.1"
+    "mocha": "2.4.5",
+    "nock": "7.0.2",
+    "rx-to-async-iterator": "1.0.3"
   },
   "engines": {
     "node": ">=4.0.0"
