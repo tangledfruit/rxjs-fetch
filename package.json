@@ -38,7 +38,7 @@
     "jshint": "2.9.1",
     "lintspaces-cli": "0.1.1",
     "mocha": "2.4.5",
-    "nock": "7.0.2",
+    "nock": "7.2.2",
     "rx": ">=4.0.7 <5",
     "rx-to-async-iterator": "1.1.0"
   },
