@@ -33,7 +33,7 @@
   "devDependencies": {
     "chai": "3.5.0",
     "co-mocha": "1.1.2",
-    "coveralls": "2.11.6",
+    "coveralls": "2.11.8",
     "istanbul": "0.4.2",
     "jshint": "2.9.1",
     "lintspaces-cli": "0.1.1",
