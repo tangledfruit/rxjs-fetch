@@ -40,7 +40,7 @@
     "mocha": "2.4.5",
     "nock": "7.2.2",
     "rx": ">=4.0.7 <5",
-    "rx-to-async-iterator": "1.1.0"
+    "rx-to-async-iterator": "1.1.1"
   },
   "engines": {
     "node": ">=4.0.0"
