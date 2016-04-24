@@ -1,4 +1,4 @@
-# rx-fetch [![Build Status](https://travis-ci.org/tangledfruit/rx-fetch.svg?branch=master)](https://travis-ci.org/tangledfruit/rx-fetch) [![Coverage Status](https://coveralls.io/repos/tangledfruit/rx-fetch/badge.svg?branch=master&service=github)](https://coveralls.io/github/tangledfruit/rx-fetch?branch=master)
+# rxjs-fetch [![Build Status](https://travis-ci.org/tangledfruit/rxjs-fetch.svg?branch=master)](https://travis-ci.org/tangledfruit/rxjs-fetch) [![Coverage Status](https://coveralls.io/repos/tangledfruit/rxjs-fetch/badge.svg?branch=master&service=github)](https://coveralls.io/github/tangledfruit/rxjs-fetch?branch=master)
 
 RxJS-flavored version of HTTP fetch API for node.js.
 
@@ -15,15 +15,15 @@ Built on top of [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic
 ### NPM
 
 ```sh
-npm install --save rx-fetch
+npm install --save rxjs-fetch
 ```
 
 ## Usage
 
 ```js
-const rxFetch = require('rx-fetch');
+const rxjsFetch = require('rxjs-fetch');
 
-rxFetch('http://tangledfruit.com/mumble.txt')
+rxjsFetch('http://tangledfruit.com/mumble.txt')
   .subscribe(
     function (response) {
 
@@ -56,30 +56,30 @@ rxFetch('http://tangledfruit.com/mumble.txt')
     });
 ```
 
-There are some shortcut methods available on the Observable object that is returned from `rxFetch`:
+There are some shortcut methods available on the Observable object that is returned from `rxjsFetch`:
 
 ```js
-rxFetch('http://tangledfruit.com/mumble.txt').failOnHttpError()
+rxjsFetch('http://tangledfruit.com/mumble.txt').failOnHttpError()
   // -> This Observable will yield an onError notification using the HttpError
   // object described below if the HTTP status code is >= 400.
 ```
 
 ```js
-rxFetch('http://tangledfruit.com/mumble.txt').failIfStatusNotIn([200, 404])
+rxjsFetch('http://tangledfruit.com/mumble.txt').failIfStatusNotIn([200, 404])
   // -> This Observable will yield an onError notification using the HttpError
   // object described below if the HTTP status code is anything other than the
   // codes listed (in this case, 200 and 404).
 ```
 
 ```js
-rxFetch('http://tangledfruit.com/mumble.txt').text()
+rxjsFetch('http://tangledfruit.com/mumble.txt').text()
   // -> This Observable will yield an onNext notification containing only the
   // body text of the HTTP response. The HTTP headers and status are discarded.
   // This call implies .failOnHttpError().
 ```
 
 ```js
-rxFetch('http://tangledfruit.com/mumble.txt').json()
+rxjsFetch('http://tangledfruit.com/mumble.txt').json()
   // -> This Observable will yield an onNext notification containing only the
   // body of the HTTP response parsed as JSON. The HTTP headers and status are
   // discarded. This call implies .failOnHttpError().

@@ -6,13 +6,13 @@ require('rx-to-async-iterator');
 const Rx = require('rx');
 const expect = require('chai').expect;
 const nock = require('nock');
-const rxFetch = require('../lib/rx-fetch');
+const rxjsFetch = require('../lib/rx-fetch');
 
 const good = 'hello world. 你好世界。';
 const bad = 'good bye cruel world. 再见残酷的世界。';
 
 
-describe("rx-fetch", () => {
+describe("rxjs-fetch", () => {
 
   it("should be defined", () => {
     expect(fetch).to.be.a('function');
@@ -25,7 +25,7 @@ describe("rx-fetch", () => {
       .get('/succeed.txt')
       .reply(200, good);
 
-    const result = yield rxFetch('http://tangledfruit.com/succeed.txt').shouldGenerateOneValue();
+    const result = yield rxjsFetch('http://tangledfruit.com/succeed.txt').shouldGenerateOneValue();
 
     expect(result.status).to.equal(200);
     expect(result.ok).to.equal(true);
@@ -42,7 +42,7 @@ describe("rx-fetch", () => {
       .get('/succeed.txt')
       .reply(200, good);
 
-    const fetchResult = rxFetch('http://tangledfruit.com/succeed.txt');
+    const fetchResult = rxjsFetch('http://tangledfruit.com/succeed.txt');
 
     expect(scope.isDone()).to.equal(false);
 
@@ -63,11 +63,11 @@ describe("rx-fetch", () => {
       .get('/succeed.txt')
       .reply(200, good);
 
-    const fetchResult = rxFetch('http://tangledfruit.com/succeed.txt');
+    const fetchResult = rxjsFetch('http://tangledfruit.com/succeed.txt');
 
     yield fetchResult.shouldGenerateOneValue();
 
-    expect((yield fetchResult.shouldThrow()).message).to.equal("can not subscribe to rx-fetch result more than once");
+    expect((yield fetchResult.shouldThrow()).message).to.equal("can not subscribe to rxjs-fetch result more than once");
 
   });
 
@@ -78,7 +78,7 @@ describe("rx-fetch", () => {
       .post('/post.txt', "Yo, what's up?")
       .reply(200, good);
 
-    const result = yield rxFetch('http://tangledfruit.com/post.txt',
+    const result = yield rxjsFetch('http://tangledfruit.com/post.txt',
       {
         method: 'post',
         body: "Yo, what's up?"
@@ -99,7 +99,7 @@ describe("rx-fetch", () => {
       .get('/succeed.txt')
       .reply(200, good);
 
-    const fetchResult = rxFetch('http://tangledfruit.com/succeed.txt');
+    const fetchResult = rxjsFetch('http://tangledfruit.com/succeed.txt');
 
     it("should return an Observable which yields the body of the response as a string", function* () {
 
@@ -117,7 +117,7 @@ describe("rx-fetch", () => {
         .flatMapLatest(response => response.text())
         .shouldThrow();
 
-      expect(textResult.message).to.equal("can not subscribe to rx-fetch result more than once");
+      expect(textResult.message).to.equal("can not subscribe to rxjs-fetch result more than once");
 
     });
 
@@ -130,7 +130,7 @@ describe("rx-fetch", () => {
       .get('/json.txt')
       .reply(200, '{"x":["hello", "world", 42]}');
 
-    const fetchResult = rxFetch('http://tangledfruit.com/json.txt');
+    const fetchResult = rxjsFetch('http://tangledfruit.com/json.txt');
 
     it("should return an Observable which yields the body of the response as parsed JSON", function* () {
 
@@ -148,7 +148,7 @@ describe("rx-fetch", () => {
         .flatMapLatest(response => response.json())
         .shouldThrow();
 
-      expect(jsonResult.message).to.equal("can not subscribe to rx-fetch result more than once");
+      expect(jsonResult.message).to.equal("can not subscribe to rxjs-fetch result more than once");
 
     });
 
@@ -161,7 +161,7 @@ describe("rx-fetch", () => {
       .get('/fail.txt')
       .reply(404, bad);
 
-    const result = yield rxFetch('http://tangledfruit.com/fail.txt').shouldGenerateOneValue();
+    const result = yield rxjsFetch('http://tangledfruit.com/fail.txt').shouldGenerateOneValue();
 
     expect(result.status).to.equal(404);
     expect(result.ok).to.equal(false);
@@ -180,7 +180,7 @@ describe("rx-fetch", () => {
         .get('/succeed.txt')
         .reply(200, good);
 
-      const result = yield rxFetch('http://tangledfruit.com/succeed.txt')
+      const result = yield rxjsFetch('http://tangledfruit.com/succeed.txt')
         .failOnHttpError()
         .shouldGenerateOneValue();
 
@@ -199,7 +199,7 @@ describe("rx-fetch", () => {
         .get('/fail.txt')
         .reply(404, bad);
 
-      const error = yield rxFetch('http://tangledfruit.com/fail.txt')
+      const error = yield rxjsFetch('http://tangledfruit.com/fail.txt')
         .failOnHttpError()
         .shouldThrow();
 
@@ -218,7 +218,7 @@ describe("rx-fetch", () => {
     it("should fail if acceptableStatusCodes is not an array", () => {
 
       expect(() => {
-        rxFetch('http://tangledfruit.com/succeed.txt').failIfStatusNotIn(404);
+        rxjsFetch('http://tangledfruit.com/succeed.txt').failIfStatusNotIn(404);
       }).to.throw('acceptableStatusCodes must be an Array');
 
     });
@@ -230,7 +230,7 @@ describe("rx-fetch", () => {
         .get('/succeed.txt')
         .reply(200, good);
 
-      const result = yield rxFetch('http://tangledfruit.com/succeed.txt')
+      const result = yield rxjsFetch('http://tangledfruit.com/succeed.txt')
         .failIfStatusNotIn([200])
         .shouldGenerateOneValue();
 
@@ -249,7 +249,7 @@ describe("rx-fetch", () => {
         .get('/fail.txt')
         .reply(404, bad);
 
-      const error = yield rxFetch('http://tangledfruit.com/fail.txt')
+      const error = yield rxjsFetch('http://tangledfruit.com/fail.txt')
         .failIfStatusNotIn([200, 400])
         .shouldThrow();
 
@@ -271,7 +271,7 @@ describe("rx-fetch", () => {
         .get('/succeed.txt')
         .reply(200, good);
 
-      const textResult = yield rxFetch('http://tangledfruit.com/succeed.txt').text().shouldGenerateOneValue();
+      const textResult = yield rxjsFetch('http://tangledfruit.com/succeed.txt').text().shouldGenerateOneValue();
 
       expect(textResult).to.equal(good);
 
@@ -284,7 +284,7 @@ describe("rx-fetch", () => {
         .get('/fail.txt')
         .reply(404, bad);
 
-      const error = yield rxFetch('http://tangledfruit.com/fail.txt').text().shouldThrow();
+      const error = yield rxjsFetch('http://tangledfruit.com/fail.txt').text().shouldThrow();
 
       expect(error).to.be.an.instanceof(Error);
       expect(error.message).to.match(/^HTTP Error 404:/);
@@ -304,7 +304,7 @@ describe("rx-fetch", () => {
 
     it("should return an Observable which yields the body of the response as parsed JSON", function* () {
 
-      const jsonResult = yield rxFetch('http://tangledfruit.com/json.txt').json().shouldGenerateOneValue();
+      const jsonResult = yield rxjsFetch('http://tangledfruit.com/json.txt').json().shouldGenerateOneValue();
 
       expect(jsonResult).to.deep.equal({"x": ["hello", "world", 42]});
 
@@ -317,7 +317,7 @@ describe("rx-fetch", () => {
         .get('/fail.txt')
         .reply(404, bad);
 
-      const error = yield rxFetch('http://tangledfruit.com/fail.txt').json().shouldThrow();
+      const error = yield rxjsFetch('http://tangledfruit.com/fail.txt').json().shouldThrow();
 
       expect(error).to.be.an.instanceof(Error);
       expect(error.message).to.match(/^HTTP Error 404:/);

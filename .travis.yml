@@ -9,6 +9,6 @@ deploy:
     secure: XVGe3lHt06surAA5+WayQ1owtD4/rZ8la64YcTwj0+hJsNmAHIeXpHTDsRULS17wkCidXgOFsxt2ZLbbdGC5/rClUz23PfVnSt1D5m3ctuXglqiqdHfgEGwiYnQOzCDoSzUkFFs14jxzIRGUVE1H0Sfbx31g688hX2uoHI7nsHJFvEF5sHnbIkF28dQKCnDRilE98ZioX9uQCKZimdfBZoAxjgaiKsf1w5SVt/ozzFHUu4tArYyOiGm5cyMOy6KVLXbEPcPa7Be5YlCB379+F8CV7iMrhd7kxx7NnDuCS5me+Dbjv5TDZT7kkL4SHR38ySQUmd7QIrGP3Ta5k3RevGPuQGbxpGtVY9ObZAAlZtrOSW3W1EKld1/bg/I5XSMTXE0939SYG9SGPo55Bi7lyv1esTY1P8kp1tcuPrWE9ZnCOFfzc23C32/1I5/Z7/+GDVMk0JPW4OaSFMfJ9avamN665jKnE5czttfqNksv1WxR2OkxlsfqziE7/Vx7i55dbp/qIAfudxtOZNLm/5NFPTfLAOrhC2uAZNIiXXsQTjDmM3GnmFi9oirclc2JhGElSewoxTjRRRn4LRVe9NOH8scAEGoZwWm+cnEDd8f4Z5UAbbHS7Hd6MWToZM3b/AJt5flZpMoRWjytiyeBMTS8lEgYuR+tX2/dJ1yt+/F152M=
   on:
     tags: true
-    repo: tangledfruit/rx-fetch
+    repo: tangledfruit/rxjs-fetch
 script: "npm run-script test-travis"
 after_script: "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"

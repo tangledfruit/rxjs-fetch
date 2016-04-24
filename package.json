@@ -1,7 +1,7 @@
 {
-  "name": "rx-fetch",
+  "name": "rxjs-fetch",
   "version": "1.2.7",
-  "description": "RxJS-flavored version of HTTP fetch API for node.js",
+  "description": "RxJS-flavored version of HTTP fetch API for node.js (for RxJS 5.0+)",
   "main": "index.js",
   "scripts": {
     "files": "find . -name '*.js' ! -path './node_modules/*' ! -path './coverage/*'",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tangledfruit/rx-fetch.git"
+    "url": "git+https://github.com/tangledfruit/rxjs-fetch.git"
   },
   "keywords": [
     "rx",
@@ -21,9 +21,9 @@
   "author": "tangledfruit <code@tangledfruit.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/tangledfruit/rx-fetch/issues"
+    "url": "https://github.com/tangledfruit/rxjs-fetch/issues"
   },
-  "homepage": "https://github.com/tangledfruit/rx-fetch#readme",
+  "homepage": "https://github.com/tangledfruit/rxjs-fetch#readme",
   "dependencies": {
     "isomorphic-fetch": "2.2.1",
     "rx": ">=4.0.7 <5"
