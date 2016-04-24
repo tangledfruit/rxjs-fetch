@@ -15,6 +15,7 @@
   "keywords": [
     "rx",
     "rxjs",
+    "rxjs5",
     "http",
     "fetch"
   ],
@@ -26,7 +27,7 @@
   "homepage": "https://github.com/tangledfruit/rxjs-fetch#readme",
   "dependencies": {
     "isomorphic-fetch": "2.2.1",
-    "rx": ">=4.0.7 <5"
+    "rxjs": ">=5.0.0-beta.6"
   },
   "devDependencies": {
     "chai": "3.5.0",
@@ -37,7 +38,7 @@
     "lintspaces-cli": "0.1.1",
     "mocha": "2.4.5",
     "nock": "8.0.0",
-    "rx-to-async-iterator": "1.1.6"
+    "rxjs-to-async-iterator": "^2.0.1"
   },
   "engines": {
     "node": ">=4",
