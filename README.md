@@ -2,6 +2,10 @@
 
 RxJS-flavored version of HTTP fetch API for node.js.
 
+**IMPORTANT:** This library only supports RxJS 4.x.
+
+**Looking for RxJS 5.0+ support?** Try  [rxjs-fetch](https://github.com/tangledfruit/rxjs-fetch). (Same name but replace 'rx' with 'rxjs'.)
+
 Built on top of [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch).
 
 
