@@ -4,9 +4,8 @@
   "description": "RxJS-flavored version of HTTP fetch API for node.js",
   "main": "index.js",
   "scripts": {
-    "files": "find . -name '*.js' ! -path './node_modules/*' ! -path './coverage/*'",
-    "test": "jshint `npm run -s files` && lintspaces -i js-comments -e .editorconfig `npm run -s files` && mocha",
-    "test-travis": "jshint `npm run -s files` && lintspaces -i js-comments -e .editorconfig `npm run -s files` && ./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*"
+    "test": "semistandard && mocha",
+    "test-travis": "semistandard && ./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*"
   },
   "repository": {
     "type": "git",
@@ -33,15 +32,22 @@
     "co-mocha": "^1.1.2",
     "coveralls": "^2.11.9",
     "istanbul": "^0.4.3",
-    "jshint": "^2.9.2",
-    "lintspaces-cli": "^0.1.1",
     "mocha": "^2.4.5",
     "nock": "^8.0.0",
-    "rx-to-async-iterator": "^1.1.8"
+    "rx-to-async-iterator": "^1.1.8",
+    "semistandard": "^7.0.5"
   },
   "engines": {
     "node": ">=4",
     "npm": ">=3"
   },
-  "engineStrict": true
+  "engineStrict": true,
+  "semistandard": {
+    "globals": [
+      "before",
+      "describe",
+      "fetch",
+      "it"
+    ]
+  }
 }
