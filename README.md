@@ -21,9 +21,9 @@ npm install --save rxjs-fetch
 ## Usage
 
 ```js
-const rxjsFetch = require('rxjs-fetch');
+const rxFetch = require('rxjs-fetch');
 
-rxjsFetch('http://tangledfruit.com/mumble.txt')
+rxFetch('http://tangledfruit.com/mumble.txt')
   .subscribe(
     function (response) {
 
@@ -56,38 +56,38 @@ rxjsFetch('http://tangledfruit.com/mumble.txt')
     });
 ```
 
-There are some shortcut methods available on the Observable object that is returned from `rxjsFetch`:
+There are some shortcut methods available on the Observable object that is returned from `rxFetch`:
 
 ```js
-rxjsFetch('http://tangledfruit.com/mumble.txt').failOnHttpError()
-  // -> This Observable will yield an onError notification using the HttpError
+rxFetch('http://tangledfruit.com/mumble.txt').failOnHttpError()
+  // -> This Observable will yield an error notification using the HttpError
   // object described below if the HTTP status code is >= 400.
 ```
 
 ```js
-rxjsFetch('http://tangledfruit.com/mumble.txt').failIfStatusNotIn([200, 404])
-  // -> This Observable will yield an onError notification using the HttpError
+rxFetch('http://tangledfruit.com/mumble.txt').failIfStatusNotIn([200, 404])
+  // -> This Observable will yield an error notification using the HttpError
   // object described below if the HTTP status code is anything other than the
   // codes listed (in this case, 200 and 404).
 ```
 
 ```js
-rxjsFetch('http://tangledfruit.com/mumble.txt').text()
-  // -> This Observable will yield an onNext notification containing only the
+rxFetch('http://tangledfruit.com/mumble.txt').text()
+  // -> This Observable will yield a next notification containing only the
   // body text of the HTTP response. The HTTP headers and status are discarded.
   // This call implies .failOnHttpError().
 ```
 
 ```js
-rxjsFetch('http://tangledfruit.com/mumble.txt').json()
-  // -> This Observable will yield an onNext notification containing only the
+rxFetch('http://tangledfruit.com/mumble.txt').json()
+  // -> This Observable will yield a next notification containing only the
   // body of the HTTP response parsed as JSON. The HTTP headers and status are
   // discarded. This call implies .failOnHttpError().
 ```
 
 ### HTTP Error object
 
-The `.failOnHttpError` and `.failIfStatusNotIn` methods will send an `onError`
+The `.failOnHttpError` and `.failIfStatusNotIn` methods will send an `error`
 notification with an `HttpError` object. This is the standard `Error` Object,
 but it has an extra member `response` from which you can access other properties
 as described earlier.
