@@ -1,6 +1,10 @@
-# rxjs-fetch [![Build Status](https://travis-ci.org/tangledfruit/rxjs-fetch.svg?branch=master)](https://travis-ci.org/tangledfruit/rxjs-fetch) [![Coverage Status](https://coveralls.io/repos/tangledfruit/rxjs-fetch/badge.svg?branch=master&service=github)](https://coveralls.io/github/tangledfruit/rxjs-fetch?branch=master)
+# rxjs-fetch [![Build Status](https://travis-ci.org/tangledfruit/rxjs-fetch.svg?branch=master)](https://travis-ci.org/tangledfruit/rxjs-fetch) [![Coverage Status](https://coveralls.io/repos/tangledfruit/rxjs-fetch/badge.svg?branch=master&service=github)](https://coveralls.io/github/tangledfruit/rxjs-fetch?branch=master) [![js-semistandard-style](https://img.shields.io/badge/code%20style-semistandard-brightgreen.svg?style=flat-square)](https://github.com/Flet/semistandard)
 
 RxJS-flavored version of HTTP fetch API for node.js.
+
+**IMPORTANT:** This library only supports RxJS 5.x.
+
+**Looking for RxJS 4.x support?** Try  [rx-fetch](https://github.com/tangledfruit/rx-fetch). (Same name but replace 'rxjs' with 'rx'.)
 
 Built on top of [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch).
 
@@ -25,8 +29,7 @@ const rxFetch = require('rxjs-fetch');
 
 rxFetch('http://tangledfruit.com/mumble.txt')
   .subscribe(
-    function (response) {
-
+    response => {
       /*
         Occurs exactly once. "response" is an Object with the following properties:
 
@@ -47,13 +50,14 @@ rxFetch('http://tangledfruit.com/mumble.txt')
           It is an error to call more than one of these methods or to call any
           of these methods more than once.
       */
-
     },
-    function (err) {
+    err => {
+      console.log(err);
       // Should only happen if unable to reach server.
       // Server error responses (status code >= 400)
       // are not automatically mapped to errors.
     });
+
 ```
 
 There are some shortcut methods available on the Observable object that is returned from `rxFetch`:
