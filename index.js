@@ -1,1 +1,1 @@
-module.exports = require('./lib/rxjs-fetch');
+module.exports = require('./lib/rx-fetch');
