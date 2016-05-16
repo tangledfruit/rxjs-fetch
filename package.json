@@ -35,7 +35,7 @@
     "mocha": "^2.4.5",
     "nock": "^8.0.0",
     "rx-to-async-iterator": "^1.1.8",
-    "semistandard": "^7.0.5"
+    "semistandard": "^8.0.0"
   },
   "engines": {
     "node": ">=4",
