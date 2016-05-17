@@ -273,6 +273,38 @@ describe('rx-fetch', () => {
         "  .reply(200, 'hello world. 你好世界。')"]);
     });
 
+    it('should record a request with a non-standard HTTP verb', function * () {
+      nock('http://tangledfruit.com')
+        .intercept('/succeed.txt', 'mumble')
+        .reply(200, good);
+
+      const nockRecord = new Rx.ReplaySubject();
+      yield rxFetch('http://tangledfruit.com/succeed.txt', {method: 'mumble'}).recordTo(nockRecord).text().shouldGenerateOneValue();
+      nockRecord.onCompleted();
+
+      const nockReplay = yield nockRecord.toArray().shouldGenerateOneValue();
+      expect(nockReplay).to.deep.equal([
+        "nock('http://tangledfruit.com')",
+        "  .intercept('mumble', '/succeed.txt')",
+        "  .reply(200, 'hello world. 你好世界。')"]);
+    });
+
+    it('should record a request with query string', function * () {
+      nock('http://tangledfruit.com')
+        .intercept('/succeed.txt?really=yes', 'mumble')
+        .reply(200, good);
+
+      const nockRecord = new Rx.ReplaySubject();
+      yield rxFetch('http://tangledfruit.com/succeed.txt?really=yes#ok,maybe', {method: 'mumble'}).recordTo(nockRecord).text().shouldGenerateOneValue();
+      nockRecord.onCompleted();
+
+      const nockReplay = yield nockRecord.toArray().shouldGenerateOneValue();
+      expect(nockReplay).to.deep.equal([
+        "nock('http://tangledfruit.com')",
+        "  .intercept('mumble', '/succeed.txt?really=yes')",
+        "  .reply(200, 'hello world. 你好世界。')"]);
+    });
+
     it('should escape a string in response body', function * () {
       nock('http://tangledfruit.com')
         .get('/succeed.txt')
