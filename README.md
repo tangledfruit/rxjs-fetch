@@ -89,6 +89,13 @@ rxFetch('http://tangledfruit.com/mumble.txt').json()
   // discarded. This call implies .failOnHttpError().
 ```
 
+```js
+const recording = new Rx.ReplaySubject(); // can be any Subject
+rxFetch('http://tangledfruit.com/mumble.txt').recordTo(recording).json()
+  // -> Same as above, but it will capture the request and response and
+  // send it to the Subject in a syntax that can then be used to write unit
+  // tests using Nock. (See rx-fetch's own unit tests for an example.)
+```
 ### HTTP Error object
 
 The `.failOnHttpError` and `.failIfStatusNotIn` methods will send an `onError`
