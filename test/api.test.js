@@ -136,6 +136,23 @@ describe('rx-fetch', () => {
     expect(result.url).to.equal('http://tangledfruit.com/fail.txt');
   });
 
+  it('should record a simple request and response to an Rx.Subject', function * () {
+    // This option is more thoroughly tested below under .recordTo.
+    nock('http://tangledfruit.com')
+      .get('/succeed.txt')
+      .reply(200, good);
+
+    const nockRecord = new Rx.ReplaySubject();
+    yield rxFetch('http://tangledfruit.com/succeed.txt', {recordTo: nockRecord}).text().shouldGenerateOneValue();
+    nockRecord.onCompleted();
+
+    const nockReplay = yield nockRecord.toArray().shouldGenerateOneValue();
+    expect(nockReplay).to.deep.equal([
+      "nock('http://tangledfruit.com')",
+      "  .get('/succeed.txt')",
+      "  .reply(200, 'hello world. 你好世界。')"]);
+  });
+
   describe('.failOnHttpError()', () => {
     it('should return an Observable which yields a single Response object on HTTP success', function * () {
       nock('http://tangledfruit.com')

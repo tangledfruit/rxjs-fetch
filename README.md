@@ -95,6 +95,8 @@ rxFetch('http://tangledfruit.com/mumble.txt').recordTo(recording).json()
   // -> Same as above, but it will capture the request and response and
   // send it to the Subject in a syntax that can then be used to write unit
   // tests using Nock. (See rx-fetch's own unit tests for an example.)
+  // You can also invoke this by adding recordTo: subject in the options
+  // object on the .get method.
 ```
 ### HTTP Error object
 
