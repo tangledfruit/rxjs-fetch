@@ -78,6 +78,19 @@ describe('rxjs-fetch', () => {
     expect(result.url).to.equal('http://tangledfruit.com/post.txt');
   });
 
+  it('should catch any error and convert that to an Observable error', function * () {
+    nock('http://tangledfruit.com')
+      .post('/post.txt', "Yo, what's up?")
+      .replyWithError('simulated network failure');
+
+    yield rxFetch('http://tangledfruit.com/post.txt',
+      {
+        method: 'post',
+        body: "Yo, what's up?"
+      })
+      .shouldThrow(/simulated network failure/);
+  });
+
   describe('response.text()', () => {
     nock('http://tangledfruit.com')
       .get('/succeed.txt')
