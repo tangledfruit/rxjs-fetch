@@ -193,7 +193,8 @@ describe('rx-fetch', () => {
         .shouldThrow();
 
       expect(error).to.be.an.instanceof(Error);
-      expect(error.message).to.match(/^HTTP Error 404:/);
+      expect(error.message).to.match(/^HTTP Error 404/);
+      expect(error.message).to.match(/http:\/\/tangledfruit.com\/fail.txt/);
       expect(error.response.status).to.equal(404);
       expect(error.response.url).to.equal('http://tangledfruit.com/fail.txt');
     });
@@ -232,7 +233,8 @@ describe('rx-fetch', () => {
         .shouldThrow();
 
       expect(error).to.be.an.instanceof(Error);
-      expect(error.message).to.match(/^HTTP Error 404:/);
+      expect(error.message).to.match(/^HTTP Error 404/);
+      expect(error.message).to.match(/http:\/\/tangledfruit.com\/fail.txt/);
       expect(error.response.status).to.equal(404);
       expect(error.response.url).to.equal('http://tangledfruit.com/fail.txt');
     });
@@ -256,7 +258,8 @@ describe('rx-fetch', () => {
       const error = yield rxFetch('http://tangledfruit.com/fail.txt').text().shouldThrow();
 
       expect(error).to.be.an.instanceof(Error);
-      expect(error.message).to.match(/^HTTP Error 404:/);
+      expect(error.message).to.match(/^HTTP Error 404/);
+      expect(error.message).to.match(/http:\/\/tangledfruit.com\/fail.txt/);
       expect(error.response.status).to.equal(404);
       expect(error.response.url).to.equal('http://tangledfruit.com/fail.txt');
     });
@@ -280,7 +283,8 @@ describe('rx-fetch', () => {
       const error = yield rxFetch('http://tangledfruit.com/fail.txt').json().shouldThrow();
 
       expect(error).to.be.an.instanceof(Error);
-      expect(error.message).to.match(/^HTTP Error 404:/);
+      expect(error.message).to.match(/^HTTP Error 404/);
+      expect(error.message).to.match(/http:\/\/tangledfruit.com\/fail.txt/);
       expect(error.response.status).to.equal(404);
       expect(error.response.url).to.equal('http://tangledfruit.com/fail.txt');
     });
@@ -431,7 +435,8 @@ describe('rx-fetch', () => {
       nockRecord.onCompleted();
 
       expect(error).to.be.an.instanceof(Error);
-      expect(error.message).to.match(/^HTTP Error 404:/);
+      expect(error.message).to.match(/^HTTP Error 404/);
+      expect(error.message).to.match(/http:\/\/tangledfruit.com\/fail2.txt/);
       expect(error.response.status).to.equal(404);
       expect(error.response.url).to.equal('http://tangledfruit.com/fail2.txt');
 
