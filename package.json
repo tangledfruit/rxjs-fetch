@@ -1,6 +1,6 @@
 {
   "name": "rxjs-fetch",
-  "version": "2.1.3",
+  "version": "2.1.4",
   "description": "RxJS-flavored version of HTTP fetch API for node.js (for RxJS 5.0+)",
   "main": "index.js",
   "scripts": {
