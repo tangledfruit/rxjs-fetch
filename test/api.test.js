@@ -17,7 +17,7 @@ describe('rx-fetch', () => {
   });
 
   it('should return an Observable which yields a single Response object', function * () {
-    nock('http://tangledfruit.com')
+    nock('http://tangledfruit.com/')
       .get('/succeed.txt')
       .reply(200, good);
 
@@ -31,7 +31,7 @@ describe('rx-fetch', () => {
   });
 
   it('should not start work until the Observable has been subscribed to', function * () {
-    const scope = nock('http://tangledfruit.com')
+    const scope = nock('http://tangledfruit.com/')
       .get('/succeed.txt')
       .reply(200, good);
 
@@ -49,7 +49,7 @@ describe('rx-fetch', () => {
   });
 
   it('should disallow a second subscription to the Observable', function * () {
-    nock('http://tangledfruit.com')
+    nock('http://tangledfruit.com/')
       .get('/succeed.txt')
       .reply(200, good);
 
@@ -61,7 +61,7 @@ describe('rx-fetch', () => {
   });
 
   it('should allow you to post with a request body', function * () {
-    nock('http://tangledfruit.com')
+    nock('http://tangledfruit.com/')
       .post('/post.txt', "Yo, what's up?")
       .reply(200, good);
 
@@ -79,7 +79,7 @@ describe('rx-fetch', () => {
   });
 
   it('should catch any error and convert that to an Observable error', function * () {
-    nock('http://tangledfruit.com')
+    nock('http://tangledfruit.com/')
       .post('/post.txt', "Yo, what's up?")
       .replyWithError('simulated network failure');
 
@@ -92,7 +92,7 @@ describe('rx-fetch', () => {
   });
 
   describe('response.text()', () => {
-    nock('http://tangledfruit.com')
+    nock('http://tangledfruit.com/')
       .get('/succeed.txt')
       .reply(200, good);
 
@@ -114,7 +114,7 @@ describe('rx-fetch', () => {
   });
 
   describe('response.json()', () => {
-    nock('http://tangledfruit.com')
+    nock('http://tangledfruit.com/')
       .get('/json.txt')
       .reply(200, '{"x":["hello", "world", 42]}');
 
@@ -136,7 +136,7 @@ describe('rx-fetch', () => {
   });
 
   it('should still resolve with a Response object if the request fails', function * () {
-    nock('http://tangledfruit.com')
+    nock('http://tangledfruit.com/')
       .get('/fail.txt')
       .reply(404, bad);
 
@@ -151,7 +151,7 @@ describe('rx-fetch', () => {
 
   it('should record a simple request and response to an Rx.Subject', function * () {
     // This option is more thoroughly tested below under .recordTo.
-    nock('http://tangledfruit.com')
+    nock('http://tangledfruit.com/')
       .get('/succeed.txt')
       .reply(200, good);
 
@@ -161,14 +161,14 @@ describe('rx-fetch', () => {
 
     const nockReplay = yield nockRecord.toArray().shouldGenerateOneValue();
     expect(nockReplay).to.deep.equal([
-      "nock('http://tangledfruit.com')",
+      "nock('http://tangledfruit.com/')",
       "  .get('/succeed.txt')",
       "  .reply(200, 'hello world. 你好世界。')"]);
   });
 
   describe('.failOnHttpError()', () => {
     it('should return an Observable which yields a single Response object on HTTP success', function * () {
-      nock('http://tangledfruit.com')
+      nock('http://tangledfruit.com/')
         .get('/succeed.txt')
         .reply(200, good);
 
@@ -184,7 +184,7 @@ describe('rx-fetch', () => {
     });
 
     it('should yield on onError notification if the request fails', function * () {
-      nock('http://tangledfruit.com')
+      nock('http://tangledfruit.com/')
         .get('/fail.txt')
         .reply(404, bad);
 
@@ -208,7 +208,7 @@ describe('rx-fetch', () => {
     });
 
     it('should return an Observable which yields a single Response object on HTTP success', function * () {
-      nock('http://tangledfruit.com')
+      nock('http://tangledfruit.com/')
         .get('/succeed.txt')
         .reply(200, good);
 
@@ -224,7 +224,7 @@ describe('rx-fetch', () => {
     });
 
     it('should yield on onError notification if the request fails', function * () {
-      nock('http://tangledfruit.com')
+      nock('http://tangledfruit.com/')
         .get('/fail.txt')
         .reply(404, bad);
 
@@ -242,7 +242,7 @@ describe('rx-fetch', () => {
 
   describe('.text()', () => {
     it('should return an Observable which yields the body of the response as a string', function * () {
-      nock('http://tangledfruit.com')
+      nock('http://tangledfruit.com/')
         .get('/succeed.txt')
         .reply(200, good);
 
@@ -251,7 +251,7 @@ describe('rx-fetch', () => {
     });
 
     it('should yield an error result if HTTP request fails', function * () {
-      nock('http://tangledfruit.com')
+      nock('http://tangledfruit.com/')
         .get('/fail.txt')
         .reply(404, bad);
 
@@ -266,7 +266,7 @@ describe('rx-fetch', () => {
   });
 
   describe('.json()', () => {
-    nock('http://tangledfruit.com')
+    nock('http://tangledfruit.com/')
       .get('/json.txt')
       .reply(200, '{"x":["hello", "world", 42]}');
 
@@ -276,7 +276,7 @@ describe('rx-fetch', () => {
     });
 
     it('should yield an error result if called a second time', function * () {
-      nock('http://tangledfruit.com')
+      nock('http://tangledfruit.com/')
         .get('/fail.txt')
         .reply(404, bad);
 
@@ -292,7 +292,7 @@ describe('rx-fetch', () => {
 
   describe('.recordTo()', () => {
     it('should record a simple request and response to an Rx.Subject', function * () {
-      nock('http://tangledfruit.com')
+      nock('http://tangledfruit.com/')
         .get('/succeed.txt')
         .reply(200, good);
 
@@ -302,13 +302,13 @@ describe('rx-fetch', () => {
 
       const nockReplay = yield nockRecord.toArray().shouldGenerateOneValue();
       expect(nockReplay).to.deep.equal([
-        "nock('http://tangledfruit.com')",
+        "nock('http://tangledfruit.com/')",
         "  .get('/succeed.txt')",
         "  .reply(200, 'hello world. 你好世界。')"]);
     });
 
     it('should record a request with a non-standard HTTP verb', function * () {
-      nock('http://tangledfruit.com')
+      nock('http://tangledfruit.com/')
         .intercept('/succeed.txt', 'mumble')
         .reply(200, good);
 
@@ -318,13 +318,13 @@ describe('rx-fetch', () => {
 
       const nockReplay = yield nockRecord.toArray().shouldGenerateOneValue();
       expect(nockReplay).to.deep.equal([
-        "nock('http://tangledfruit.com')",
+        "nock('http://tangledfruit.com/')",
         "  .intercept('mumble', '/succeed.txt')",
         "  .reply(200, 'hello world. 你好世界。')"]);
     });
 
     it('should record a request with query string', function * () {
-      nock('http://tangledfruit.com')
+      nock('http://tangledfruit.com/')
         .intercept('/succeed.txt?really=yes', 'mumble')
         .reply(200, good);
 
@@ -334,13 +334,13 @@ describe('rx-fetch', () => {
 
       const nockReplay = yield nockRecord.toArray().shouldGenerateOneValue();
       expect(nockReplay).to.deep.equal([
-        "nock('http://tangledfruit.com')",
+        "nock('http://tangledfruit.com/')",
         "  .intercept('mumble', '/succeed.txt?really=yes')",
         "  .reply(200, 'hello world. 你好世界。')"]);
     });
 
     it('should escape a string in response body', function * () {
-      nock('http://tangledfruit.com')
+      nock('http://tangledfruit.com/')
         .get('/succeed.txt')
         .reply(200, "Shouldn't we be smart about quotes?");
 
@@ -350,13 +350,13 @@ describe('rx-fetch', () => {
 
       const nockReplay = yield nockRecord.toArray().shouldGenerateOneValue();
       expect(nockReplay).to.deep.equal([
-        "nock('http://tangledfruit.com')",
+        "nock('http://tangledfruit.com/')",
         "  .get('/succeed.txt')",
         "  .reply(200, 'Shouldn\\'t we be smart about quotes?')"]);
     });
 
     it('should record post with a request body', function * () {
-      nock('http://tangledfruit.com')
+      nock('http://tangledfruit.com/')
         .post('/post.txt', "Yo, what's up?")
         .reply(200, good);
 
@@ -370,13 +370,13 @@ describe('rx-fetch', () => {
 
       const nockReplay = yield nockRecord.toArray().shouldGenerateOneValue();
       expect(nockReplay).to.deep.equal([
-        "nock('http://tangledfruit.com')",
+        "nock('http://tangledfruit.com/')",
         "  .post('/post.txt', 'Yo, what\\'s up?')",
         "  .reply(200, 'hello world. 你好世界。')"]);
     });
 
     it('should record body text even when calling .json', function * () {
-      nock('http://tangledfruit.com')
+      nock('http://tangledfruit.com/')
         .get('/json.txt')
         .reply(200, '{"x":["hello", "world", 42]}');
 
@@ -392,13 +392,13 @@ describe('rx-fetch', () => {
 
       const nockReplay = yield nockRecord.toArray().shouldGenerateOneValue();
       expect(nockReplay).to.deep.equal([
-        "nock('http://tangledfruit.com')",
+        "nock('http://tangledfruit.com/')",
         "  .get('/json.txt')",
         "  .reply(200, '{\"x\":[\"hello\", \"world\", 42]}')"]);
     });
 
     it('should record a failed request', function * () {
-      nock('http://tangledfruit.com')
+      nock('http://tangledfruit.com/')
         .get('/fail.txt')
         .reply(404, bad);
 
@@ -415,13 +415,13 @@ describe('rx-fetch', () => {
 
       const nockReplay = yield nockRecord.toArray().shouldGenerateOneValue();
       expect(nockReplay).to.deep.equal([
-        "nock('http://tangledfruit.com')",
+        "nock('http://tangledfruit.com/')",
         "  .get('/fail.txt')",
         "  .reply(404, 'good bye cruel world. 再见残酷的世界。')"]);
     });
 
     it('should record content of a failed request when .text() is used', function * () {
-      nock('http://tangledfruit.com')
+      nock('http://tangledfruit.com/')
         .get('/fail2.txt')
         .reply(404, 'No such luck!');
 
@@ -442,7 +442,7 @@ describe('rx-fetch', () => {
 
       const nockReplay = yield nockRecord.toArray().shouldGenerateOneValue();
       expect(nockReplay).to.deep.equal([
-        "nock('http://tangledfruit.com')",
+        "nock('http://tangledfruit.com/')",
         "  .get('/fail2.txt')",
         "  .reply(404, 'No such luck!')"]);
     });
